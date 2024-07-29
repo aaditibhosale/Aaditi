@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>TodoList</title>
+  <link href="=Assignments\Assignment_todo\todo.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+
+<body>
+  
+  <div class="container">
+    <form id="form">
+      <div class="form-group">
+        <label for="title">Todo Title</label>
+        <input type="text" class="form-control" id="title" aria-describedby="emailHelp" placeholder="Enter a new task"><br>
+        <input type="text" class="form-control" id="desc" aria-describedby="emailHelp" placeholder="Enter a description" >
+      </div>
+      
+
+      <button id="submit" type="submit" class="btn btn-primary" >Add Task</button>
+      <!-- <button id="desc" type="desc">description</button> -->
+      <button id="deleteBtn" class="btn btn-danger">Delete</button>
+    </form>
+    <div id="todo">
+
+    </div>
+  </div>
+  <!-- <script src="=Assignments\Assignment_todo\todo.js"></script> -->
+   <script src="todo.js"></script>
+
+  </script>
+</body>
+
+</html>

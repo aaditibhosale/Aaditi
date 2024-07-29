@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Register</title>
+    <head>
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+    
+    .container {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-container {
+        width: 45%;
+    }
+    
+    h2 {
+        margin-top: 0;
+    }
+    
+    label {
+        display: block;
+        margin-top: 10px;
+    }
+    
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #2de8d2;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #2de8d2;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="loginEmail">Email address</label>
+                <input type="email" id="loginEmail" name="loginEmail" placeholder="Enter email" required><br>
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="loginPassword" placeholder="password" required><br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    
+
+        <div class="form-container">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <label for="registerName">Name</label>
+                <input type="text" id="registerName" name="registerName" placeholder="Enter name">
+                <label for="registerEmail">Email address</label>
+                <input type="email" id="registerEmail" name="registerEmail"placeholder="Enter email" required>
+                <label for="registerPassword">Password</label>
+                <input type="password" id="registerPassword" name="registerPassword"placeholder="password" required>
+                <label for ="registerNumber">Phone Number</label>
+                <input type = "number" id ="registerNumber"  name="registerNumber" placeholder="Enter phone number">
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+<script>
+document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    if (!email) {
+        alert('Email is required.');
+    } else if (!validateEmail(email)) {
+        alert('Invalid email format.');
+    } else if (!password) {
+        alert('Password is required.');
+    } else if (password.length < 6) {
+        alert('Password must be at least 6 characters long.');
+    } else {
+        alert('Login Successful');
+    }
+});
+
+document.getElementById('registerForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+    const phone = document.getElementById('registerNumber').value;
+
+if(!name){
+            alert('Name is requird.');
+}
+           
+   else if (!email) {
+        alert('Email is required.');
+    } else if (!validateEmail(email)) {
+        alert('Invalid email format.');
+    } else if (!phone) {
+        alert('Phone number is required.');
+    } else if (!validatePhone(phone)) {
+        alert('Invalid phone number format.');
+    } else if (!password) {
+        alert('Password is required.');
+    } else if (password.length < 6) {
+        alert('Password must be at least 6 characters long.');
+    }
+    else if(phone.length <=10)
+    {
+        alert('Phone number is at least 10 digit .');
+    }
+        
+    else {
+        alert('Registration Successful');
+    }
+});
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function validatePhone(phone) {
+    const re = /^\d{10}$/;
+    return re.test(String(phone));
+}
+
+</script>
+</body>
+</html>
