@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All Courses</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand text-white" href="#">Marks-Entry-App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="adminhome.html">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown">
+                        Options
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="showallstudents.html">Show All Students</a>
+                        <a class="dropdown-item" href="showallstaffs.html">Show All Staffs</a>
+                        <a class="dropdown-item" href="showallcourses.html">Show All Courses</a>
+                        <a class="dropdown-item" href="showallgroups.html">Show All Groups</a>
+                    </div>
+                </li>
+            </ul>
+            <span class="navbar-text text-white">
+                admin: admin
+            </span>
+            <a class="nav-link text-white" href="#">Logout</a>
+        </div>
+    </nav>
+    <div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+        <h2>Show All Courses</h2>
+        <div class="form-group">
+            <label for="addCourseInput">Add Course:</label>
+            <input type="text" class="form-control" id="addCourseInput" placeholder="Enter course name">
+            <button class="btn btn-primary mt-2" id="addCourseButton">Add</button>
+        </div>
+    </div>
+    </div>
+<br>
+    <div class="card">
+        <div class="card-body">
+        <h4>All Courses</h4>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Course Name</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody">
+                <!-- Rows of courses will be added here dynamically -->
+            </tbody>
+        </table>
+    </div>
+    </div>
+<br>
+    <div class="card">
+        <div class="card-body">
+        <div class="form-group">
+            <label for="courseSelect">Select Course:</label>
+            <select id="courseSelect" class="form-control">
+                <!-- Options will be added here dynamically -->
+            </select>
+            <button class="btn btn-primary mt-2" id="showSubjectsButton">Show Subjects</button>
+        </div>
+    </div>
+    </div>
+<br>
+    <div class="card">
+        <div class="card-body">
+        <h4>Subjects</h4>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Subject Name</th>
+                </tr>
+            </thead>
+            <tbody id="subjectTableBody">
+                <!-- Rows of subjects will be added here dynamically -->
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label for="addSubjectInput">Add Subject:</label>
+            <input type="text" class="form-control" id="addSubjectInput" placeholder="Enter subject name">
+            <button class="btn btn-primary mt-2" id="addSubjectButton">Add</button>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sample course data
+            const courses = ['DAC', 'DMC', 'DESD', 'DBDA'];
+
+            const courseTableBody = document.getElementById('courseTableBody');
+            const courseSelect = document.getElementById('courseSelect');
+            const subjectTableBody = document.getElementById('subjectTableBody');
+
+            // Populate course table
+            courses.forEach(course => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${course}</td>`;
+                courseTableBody.appendChild(row);
+
+                const option = document.createElement('option');
+                option.value = course;
+                option.textContent = course;
+                courseSelect.appendChild(option);
+            });
+
+            // Handle Add Course
+            document.getElementById('addCourseButton').addEventListener('click', function () {
+                const courseName = document.getElementById('addCourseInput').value;
+                if (courseName) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${courseName}</td>`;
+                    courseTableBody.appendChild(row);
+
+                    const option = document.createElement('option');
+                    option.value = courseName;
+                    option.textContent = courseName;
+                    courseSelect.appendChild(option);
+
+                    document.getElementById('addCourseInput').value = '';
+                }
+            });
+
+            // Handle Show Subjects
+            document.getElementById('showSubjectsButton').addEventListener('click', function () {
+                const selectedCourse = courseSelect.value;
+                if (selectedCourse) {
+                    // Sample subjects data
+                    // const subjects = {
+                    //     DAC: ['Subject1', 'Subject2'],
+                    //     DMC: ['Subject3', 'Subject4'],
+                    //     DESD: ['Subject5', 'Subject6'],
+                    //     DBDA: ['Subject7', 'Subject8']
+                    // };
+
+                        
+        fetch(`http://localhost:5000/admin/subject-with-course-name/${selectedCourse}`)
+            .then((response) => response.json())
+          .then((data) => {
+            debugger
+            if (data.status === "success") {
+              const subjects = data.data.results;
+              debugger
+              const tableBody = $("#student-table tbody");
+              tableBody.empty(); // Clear previous data
+
+                    subjectTableBody.innerHTML = '';
+                    
+                        subjects.forEach(s => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `<td>${s.subject_name}</td>`;
+                            subjectTableBody.appendChild(row);
+                        });
+                    
+                }
+            });
+                }})
+
+            // Handle Add Subject
+            document.getElementById('addSubjectButton').addEventListener('click', function () {
+                var subjectName = document.getElementById('addSubjectInput').value;
+
+               
+                
+                const selectedCourse = courseSelect.value;
+                if (subjectName && selectedCourse) {
+
+                    console.log(subjectName);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${subjectName}</td>`;
+                    subjectTableBody.appendChild(row);
+
+                    document.getElementById('addSubjectInput').value = '';
+
+                    fetch(`http://localhost:5000/admin/courses/${selectedCourse}/subjects-add/${subjectName}`,{
+                        method:"POST",
+                        // body:JSON.stringify({
+                        //     subjectName: subjectName
+                        //  }),
+                    })
+                    
+            .then((response) => response.json())
+          .then((data) => {
+            debugger
+            if (data.status === "success") {
+            //   const subjects = data.data.results;
+            //   debugger
+            //   const tableBody = $("#student-table tbody");
+            //   tableBody.empty(); // Clear previous data
+
+                }
+            });
+        }})
+        });
+    
+    </script>
+</body>
+
+</html>

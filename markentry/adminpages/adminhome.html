@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .dropdown-menu a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand text-white" href="#">Marks-Entry-App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown">
+                        Options
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="showallstudents.html">Show All Students</a>
+                        <a class="dropdown-item" href="showallstaffs.html">Show All Staffs</a>
+                        <a class="dropdown-item" href="showallcourses.html">Show All Courses</a>
+                        <a class="dropdown-item" href="showallgroups.html">Show All Groups</a>
+                    </div>
+                </li>
+            </ul>
+            <span class="navbar-text text-white">
+                admin: admin
+            </span>
+            <a class="nav-link text-white" href="#">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <h4>Welcome, admin</h4>
+        <p>This is the Admin Home page!</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

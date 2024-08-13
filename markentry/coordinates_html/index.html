@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Entry App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #007bff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            color: white;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .nav-links a,
+        .dropdown-menu a {
+            color: white;
+            margin-left: 1rem;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .dropdown-menu a:hover {
+            color: #cce7ff;
+        }
+
+        .dropdown-menu a {
+            color: #333;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .welcome-container {
+            display: inline-block;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-container h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .welcome-container p {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .task-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .task-button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .task-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .show-students { background-color: #ff7675; }
+        .add-mark-scheme { background-color: #fab1a0; }
+        .add-evaluation { background-color: #74b9ff; }
+        .assigned-task { background-color: #55efc4; }
+        .show-completed-tasks { background-color: #b2bec3; }
+
+        .welcome-message {
+            margin-bottom: 2rem;
+            animation: fadeInSlideUp 2s ease-out forwards;
+        }
+
+        @keyframes fadeInSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- <nav>
+        <div class="navbar">
+            <h1>Marks-Entry-App</h1>
+            <div class="nav-links">
+                <a href="./index.html">Home</a>
+                <div class="dropdown">
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Options
+                    </a> -->
+                    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+                        <a class="navbar-brand text-white" href="#">Marks-Entry-App</a>
+                        <div class="collapse navbar-collapse">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#">Home</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown">
+                                        Options
+                                    </a>                
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="showStudent.html">Show Students</a>
+                        <a class="dropdown-item" href="addMarks.html">Add Marks Scheme</a>
+                        <a class="dropdown-item" href="addEvalution.html">Add Evaluation</a>
+                        <a class="dropdown-item" href="assignTask.html">Assigned Task</a>
+                        <a class="dropdown-item" href="completed.html">Show Completed Tasks</a>
+                    </div>
+
+                </li>
+                <a class="nav-link text-white" href="#">Logout</a>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="welcome-message">
+            <h2>Welcome</h2>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="welcome-container">
+            <p>This is the Coco Home page!</p>
+            <div class="task-buttons">
+                <button class="task-button show-students">Show Students</button>
+                <button class="task-button add-mark-scheme">Add Mark Scheme</button>
+                <button class="task-button add-evaluation">Add Evaluation</button>
+                <button class="task-button assigned-task">Assigned Task</button>
+                <button class="task-button show-completed-tasks">Show Completed Tasks</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

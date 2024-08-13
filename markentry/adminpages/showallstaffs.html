@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All Staffs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand text-white" href="#">Marks-Entry-App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="adminhome.html">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                        Options
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="showallstudents.html">Show All Students</a>
+                        <a class="dropdown-item" href="showallstaffs.html">Show All Staffs</a>
+                        <a class="dropdown-item" href="showallcourses.html">Show All Courses</a>
+                        <a class="dropdown-item" href="showallgroups.html">Show All Groups</a>
+                    </div>
+                </li>
+            </ul>
+            <span class="navbar-text text-white">
+                admin: admin
+            </span>
+            <a class="nav-link text-white" href="#">Logout</a>
+        </div>
+    </nav>
+    <div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+        <h2>All Staffs</h2>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Staff Name</th>
+                    <th>Email</th>
+                    <th>Course Name</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody id="staffTableBody">
+                <!-- Rows of staffs will be added here dynamically -->
+            </tbody>
+        </table>
+    </div>
+    </div>
+<br>
+    <div class="card">
+        <div class="card-body">
+        <h4>Update Staff Details</h4>
+        <form id="updateStaffForm">
+            <div class="form-group">
+                <label for="emailInput">Email address</label>
+                <input type="email" class="form-control" id="emailInput" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="courseSelect">Select Course</label>
+                <select id="courseSelect" class="form-control">
+                    <option value="">-</option>
+                    <!-- Options will be added here dynamically -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="roleSelect">Select Role</label>
+                <select id="roleSelect" class="form-control">
+                    <option value="staff">Staff</option>
+                    <option value="coordinator">Coordinator</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // const global_staff_id;
+   
+        document.addEventListener('DOMContentLoaded', function() {
+          
+            // Sample staff data
+            // const staffs = [
+            //     { id: '100', name: 'test', email: 'test', course: 'DAC', role: 'staff' },
+            //     { id: '101', name: 'coco', email: 'coco', course: 'DAC', role: 'coordinator' },
+            //     { id: '1', name: 's', email: 's', course: 'DESD', role: 'coordinator' },
+            //     { id: '222', name: 'dmc', email: 'dmc', course: 'DMC', role: 'staff' },
+            //     { id: '1000', name: 'staff', email: 'staff', course: 'DESD', role: 'staff' },
+            // ];
+
+            const courses = [
+                'DAC',
+                'DESD',
+                'DMC'
+            ];
+
+            
+
+            const staffTableBody = document.getElementById('staffTableBody');
+            const courseSelect = document.getElementById('courseSelect');
+
+
+           
+        fetch("http://localhost:5000/admin/staff")
+            .then((response) => response.json())
+          .then((data) => {
+            // debugger
+            if (data.status === "success") {
+              const staffs = data.data;
+              
+              debugger
+              const tableBody = $("#student-table tbody");
+              tableBody.empty(); // Clear previous data
+
+            // Populate staff table
+            staffs.forEach(s => {
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${s.staff_id}</td>
+                    <td>${s.staff_name}</td>
+                    <td>${s.email}</td>
+                    <td>${s.course_name}</td>
+                    <td>${s.role}</td>
+                `;
+                staffTableBody.appendChild(row);
+            });
+
+            // Populate course select dropdown
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course;
+                option.textContent = course;
+                courseSelect.appendChild(option);
+            });
+
+            // Handle form submission
+            document.getElementById('updateStaffForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const email = document.getElementById('emailInput').value;
+                const course = document.getElementById('courseSelect').value;
+                const role = document.getElementById('roleSelect').value;
+
+                debugger
+                // alert(`Updated Staff Details:\nEmail: ${email}\nCourse: ${course}\nRole: ${role}`);
+
+            fetch("http://127.0.0.1:5000/admin/staff/update", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email, 
+                            course: course, 
+                            role: role
+            }),
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            debugger
+            console.log("data ", data);
+            
+            // if (data.status === "success") {
+            //   const staffs = data.data;
+            //   debugger
+            //   const tableBody = $("#student-table tbody");
+            //   tableBody.empty(); // Clear previous data
+
+            // }
+            });
+        
+
+        })
+        
+        }
+        });
+        
+    });
+
+
+    </script>
+</body>
+</html>

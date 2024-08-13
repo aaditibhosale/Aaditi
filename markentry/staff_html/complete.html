@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course DAC - Pending Tasks</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            padding: 2rem;
+        }
+        .navbar {
+        background-color: #007bff;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar h1 {
+        color: white;
+        margin: 0;
+        font-size: 1rem;
+    }
+    
+    .nav-links a {
+        color: white;
+        margin-left: 1rem;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+        color: #cce7ff;
+    }
+    
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        .table-container {
+            margin-bottom: 2rem;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.welcome-message {
+    margin-bottom: 2rem;
+    animation: fadeInSlideUp 2s ease-out forwards;
+}
+
+@keyframes fadeInSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+            <h1>Marks-Entry-App</h1>
+            <div class="nav-links">
+                <a href="./login.html">Home</a>
+                <a href="./pending.html">Pending Task</a>
+                <a href="./complete.html">Completed Tasks</a> 
+                <a href="./login.html">Logout</a>
+            </div> 
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="welcome-message">
+            <h2>Course</h2>
+        </div>
+
+    <div class="container">
+        
+        <div class="table-container">
+            <h3>Complete Tasks</h3>
+            <table class="table table-bordered">
+                
+                <thead>
+                    <tr>
+                        <th>Staff Name</th>
+                        <th>Student Name</th>
+                        <th>Group Name</th>
+                        <th>Subject Name</th>
+                        <th>Theory</th>
+                        <th>Lab</th>
+                        <th>IA1</th>
+                        <th>IA2</th>
+                        <th>From Date</th>
+                        <th>Till Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>test</td>
+                        <td>s1</td>
+                        <td>D1</td>
+                        <td>Java</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>May 02, 2024</td>
+                        <td>May 02, 2024</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>test</td>
+                        <td>s3</td>
+                        <td>D1</td>
+                        <td>Java</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>May 02, 2024</td>
+                        <td>May 02, 2024</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>test</td>
+                        <td>s2</td>
+                        <td>D1</td>
+                        <td>Java</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Jan 01, 1970</td>
+                        <td>Jan 01, 1970</td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+    const staffId = 'STAFF_ID'; // Replace with the actual staff ID
+    fetchStaffCompletedTasks(staffId);
+
+    // Event handler for the approval checkbox
+    $(document).on('change', '.approval-checkbox', function () {
+        const id = $(this).data('id');
+        const isChecked = $(this).is(':checked');
+        updateApprovalStatus(id, isChecked);
+    });
+});
+
+function fetchAssignedTasks() {
+    fetch('/show-unapproved-tasks/course_name', {
+        headers: {
+            Authorization: 'Bearer YOUR_TOKEN_HERE',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            const tasks = data.data;
+            const tableBody = $('#assigned-tasks-table tbody');
+            tableBody.empty();
+            tasks.forEach(task => {
+                const row = `
+                    <tr>
+                        <td>${task.staffName}</td>
+                        <td>${task.studentName}</td>
+                        <td>${task.groupName}</td>
+                        <td>${task.subjectName}</td>
+                        <td>${task.theory}</td>
+                        <td>${task.lab}</td>
+                        <td>${task.ia1}</td>
+                        <td>${task.ia2}</td>
+                        <td>${task.fromDate}</td>
+                        <td>${task.tillDate}</td>
+                        <td>
+                            <input type="checkbox" class="approval-checkbox" data-id="${task.id}" ${task.approved ? 'checked' : ''}>
+                        </td>
+                    </tr>
+                `;
+                tableBody.append(row);
+            });
+        } else {
+            alert('Failed to fetch assigned tasks.');
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching assigned tasks:', error);
+        alert('Error fetching assigned tasks.');
+    });
+}
+
+function fetchCompletedTasks() {
+    fetch('/show-approved-tasks/course_name', {
+        headers: {
+            Authorization: 'Bearer YOUR_TOKEN_HERE',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            const tasks = data.data;
+            const tableBody = $('#completed-tasks-table tbody');
+            tableBody.empty();
+            tasks.forEach(task => {
+                const row = `
+                    <tr>
+                        <td>${task.staffName}</td>
+                        <td>${task.studentName}</td>
+                        <td>${task.groupName}</td>
+                        <td>${task.subjectName}</td>
+                        <td>${task.theory}</td>
+                        <td>${task.lab}</td>
+                        <td>${task.ia1}</td>
+                        <td>${task.ia2}</td>
+                        <td>${task.fromDate}</td>
+                        <td>${task.tillDate}</td>
+                    </tr>
+                `;
+                tableBody.append(row);
+            });
+        } else {
+            alert('Failed to fetch completed tasks.');
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching completed tasks:', error);
+        alert('Error fetching completed tasks.');
+    });
+}
+
+function fetchStaffCompletedTasks(staffId) {
+    fetch(`/show-staff-completed-tasks/${staffId}`, {
+        headers: {
+            Authorization: 'Bearer YOUR_TOKEN_HERE',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            const tasks = data.data;
+            const tableBody = $('#staff-completed-tasks-table tbody');
+            tableBody.empty();
+            tasks.forEach(task => {
+                const row = `
+                    <tr>
+                        <td>${task.staffName}</td>
+                        <td>${task.studentName}</td>
+                        <td>${task.groupName}</td>
+                        <td>${task.subjectName}</td>
+                        <td>${task.theory}</td>
+                        <td>${task.lab}</td>
+                        <td>${task.ia1}</td>
+                        <td>${task.ia2}</td>
+                        <td>${task.fromDate}</td>
+                        <td>${task.tillDate}</td>
+                    </tr>
+                `;
+                tableBody.append(row);
+            });
+        } else {
+            alert('Failed to fetch staff completed tasks.');
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching staff completed tasks:', error);
+        alert('Error fetching staff completed tasks.');
+    });
+}
+
+function updateApprovalStatus(id, approved) {
+    fetch(`/update-approval/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer YOUR_TOKEN_HERE',
+        },
+        body: JSON.stringify({ approved }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Approval status updated successfully.');
+            fetchAssignedTasks();
+            fetchCompletedTasks();
+        } else {
+            alert('Failed to update approval status.');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating approval status:', error);
+        alert('Error updating approval status.');
+    });
+}
+
+    </script>
+</body>
+</html>

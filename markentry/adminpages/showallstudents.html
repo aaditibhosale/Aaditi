@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All Students</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand text-white" href="#">Marks-Entry-App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="adminhome.html">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown">
+                        Options
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="showallstudents.html">Show All Students</a>
+                        <a class="dropdown-item" href="showallstaffs.html">Show All Staffs</a>
+                        <a class="dropdown-item" href="showallcourses.html">Show All Courses</a>
+                        <a class="dropdown-item" href="showallgroups.html">Show All Groups</a>
+                    </div>
+                </li>
+            </ul>
+            <span class="navbar-text text-white">
+                admin: admin
+            </span>
+            <a class="nav-link text-white" href="#">Logout</a>
+        </div>
+    </nav>
+    <div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+        <h2>All Students</h2>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Roll Number</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Add to Course</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+                <!-- Rows of students will be added here dynamically -->
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <br>
+
+    <div class="card">
+        <div class="card-body">
+        <h4>Show Students of Selected Course</h4>
+        <div class="form-group">
+            <label for="courseSelect">Select Course Name:</label>
+            <select id="courseSelect" class="form-control">
+                <option value="">-</option>
+                <!-- Options will be added here dynamically -->
+            </select>
+        </div>
+        <button id="showStudentsBtn" class="btn btn-primary">Show Students</button>
+    </div>
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sample student data
+            // const students = [
+            //     { rollNumber: '1', name: 'John Doe', email: 'john@example.com' },
+            //     { rollNumber: '2', name: 'Jane Smith', email: 'jane@example.com' },
+            // ];
+
+            const courses = [
+                'DAC',
+                'DMC',
+                'DESD',
+                'DBDA'
+            ];
+
+            const studentsTableBody = document.getElementById('studentsTableBody');
+            const courseSelect = document.getElementById('courseSelect');
+
+            fetch("http://localhost:5000/admin/students-without-course")
+            .then((response) => response.json())
+          .then((data) => {
+            debugger
+            if (data.status === "success") {
+              const staffs = data.data;
+              debugger
+              const tableBody = $("#student-table tbody");
+              tableBody.empty(); // Clear previous data
+
+
+            // Populate student table
+            staffs.forEach(s => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${s.roll_number}</td>
+                    <td>${s.student_name}</td>
+                    <td>${s.email}</td>
+                    <td><button class="btn btn-primary btn-sm">Add to Course</button></td>
+                    <td><button class="btn btn-danger btn-sm">Delete</button></td>
+                `;
+                studentsTableBody.appendChild(row);
+            });
+
+            // Populate course select dropdown
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course;
+                option.textContent = course;
+                courseSelect.appendChild(option);
+            });
+
+            // Handle Show Students button click
+            document.getElementById('showStudentsBtn').addEventListener('click', function () {
+                const selectedCourse = courseSelect.value;
+                if (selectedCourse) {
+                    alert(`Showing students for course: ${selectedCourse}`);
+                } else {
+                    alert('Please select a course.');
+                }
+            });
+            }
+        });
+    });
+        
+    </script>
+</body>
+
+</html>
